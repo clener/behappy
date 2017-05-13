@@ -50,6 +50,7 @@ ALLOWED_HOSTS = [
     '10.0.2.2',
     '192.168.0.27',
     '192.168.0.14',
+    'behappyapp.herokuapp.com'
 ]
 
 
