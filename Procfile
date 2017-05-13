@@ -1,1 +1,1 @@
-web: gunicorn behappy.wsgi --log-file -
+web: gunicorn behappy.wsgi
