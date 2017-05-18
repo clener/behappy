@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BeHappy</string>
+    <string name="submitClick">Submit</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_global">Global</string>
+    <string name="title_personal">Personal</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
