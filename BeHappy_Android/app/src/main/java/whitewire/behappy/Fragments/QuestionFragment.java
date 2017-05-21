@@ -54,10 +54,12 @@ import static whitewire.behappy.R.id.day;
  */
 
 public class QuestionFragment extends Fragment implements
-        ConnectionCallbacks, OnConnectionFailedListener{
+        ConnectionCallbacks, OnConnectionFailedListener {
 
     Calendar calendar = Calendar.getInstance();
-    int mood, age, gender = 0;
+    int mood = 0;
+    int age = 0;
+    int gender = 0;
     Double latitude = 0.0;
     Double longitude = 0.0;
     GoogleApiClient mGoogleApiClient;
@@ -82,7 +84,7 @@ public class QuestionFragment extends Fragment implements
         // To get location
         buildGoogleApiClient();
 
-        if (mGoogleApiClient!= null){
+        if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         } else {
             Toast.makeText(getActivity(), "Not connected...", Toast.LENGTH_SHORT).show();
@@ -117,27 +119,13 @@ public class QuestionFragment extends Fragment implements
                 age = settings.getInt("age", 0);
                 gender = settings.getInt("gender", 0);
 
-                // Checking if location is turned on
-                LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-                boolean gps_enabled = false;
-                boolean network_enabled = false;
-
-                try {
-                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                } catch(Exception ex) {}
-
-                try {
-                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                } catch(Exception ex) {}
-
-
                 // Not continuing with process until user has chosen feeling
                 if (mood == 0) {
                     Toast.makeText(getContext(), "Choose how you are feeling today.",
                             Toast.LENGTH_SHORT).show();
-                } else if (gps_enabled == false && network_enabled == false) {
-                    Toast.makeText(getContext(), "Please enable your location",
-                            Toast.LENGTH_SHORT).show();
+                } else if (latitude == 0 || longitude == 0) {
+                    Toast.makeText(getContext(), "Please restart the app as location was not found",
+                            Toast.LENGTH_LONG).show();
                 } else {
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     int month = calendar.get(Calendar.MONTH) + 1;
@@ -169,7 +157,6 @@ public class QuestionFragment extends Fragment implements
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
 
@@ -254,20 +241,6 @@ public class QuestionFragment extends Fragment implements
         }
     }
 
-    /*@Override
-    public void onStart() {
-        super.onStart();
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-
-        if (mLastLocation != null) {
-            Toast.makeText(getActivity(),"Latitude: "+ String.valueOf(mLastLocation.getLatitude())+" Longitude: "+
-                    String.valueOf(mLastLocation.getLongitude()), Toast.LENGTH_SHORT).show();
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-        }
-    }*/
-
     @Override
     public void onStop() {
         super.onStop();
@@ -292,6 +265,7 @@ public class QuestionFragment extends Fragment implements
                     //String.valueOf(mLastLocation.getLongitude()), Toast.LENGTH_SHORT).show();
             latitude = mLastLocation.getLatitude();
             longitude = mLastLocation.getLongitude();
+            Toast.makeText(getActivity(), "lat is " + latitude + " long is " + longitude, Toast.LENGTH_SHORT).show();
         }
     }
 

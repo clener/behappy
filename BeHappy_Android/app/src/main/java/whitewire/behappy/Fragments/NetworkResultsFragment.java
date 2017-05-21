@@ -85,25 +85,8 @@ public class NetworkResultsFragment extends Fragment {
                 final int upperAgeBound = Integer.parseInt(ageEndSpinner.getSelectedItem().toString());
                 final int lowerAgeBound = Integer.parseInt(ageStartSpinner.getSelectedItem().toString());
 
-                // Checking if location is turned on
-                LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-                boolean gps_enabled = false;
-                boolean network_enabled = false;
-
-                try {
-                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                } catch(Exception ex) {}
-
-                try {
-                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                } catch(Exception ex) {}
-
-
                 if (upperAgeBound < lowerAgeBound) {
                     Toast.makeText(getContext(), "Please enter valid parameters",
-                            Toast.LENGTH_SHORT).show();
-                } else if (gps_enabled == false && network_enabled == false) {
-                    Toast.makeText(getContext(), "Please enable your location",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // Setting up network request
